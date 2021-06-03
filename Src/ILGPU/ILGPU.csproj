@@ -140,6 +140,26 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>PrimitiveDataBlocks.tt</DependentUpon>
         </None>
+        <None Update="Backends\SPIRV\SPIRVXMLReader.ttinclude">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>SPIRVJSONReader.cs</LastGenOutput>
+        </None>
+        <None Update="Backends\SPIRV\BinarySPIRVBuilder.tt">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>BinarySPIRVBuilder.cs</LastGenOutput>
+        </None>
+        <None Update="Backends\SPIRV\SPIRVComplexTypes.tt">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>SPIRVComplexTypes.cs</LastGenOutput>
+        </None>
+        <None Update="Backends\SPIRV\ISPIRVBuilder.tt">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>ISPIRVBuilder.cs</LastGenOutput>
+        </None>
+        <None Update="Backends\SPIRV\StringSPIRVBuilder.tt">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>StringSPIRVBuilder.cs</LastGenOutput>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -267,6 +287,26 @@
           <DesignTime>True</DesignTime>
           <AutoGen>True</AutoGen>
           <DependentUpon>PrimitiveDataBlocks.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Backends\SPIRV\SPIRVComplexTypes.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>SPIRVComplexTypes.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Backends\SPIRV\BinarySPIRVBuilder.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>BinarySPIRVBuilder.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Backends\SPIRV\ISPIRVBuilder.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>ISPIRVBuilder.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Backends\SPIRV\StringSPIRVBuilder.cs">
+          <AutoGen>True</AutoGen>
+          <DesignTime>True</DesignTime>
+          <DependentUpon>StringSPIRVBuilder.tt</DependentUpon>
         </Compile>
     </ItemGroup>
     <ItemGroup>
