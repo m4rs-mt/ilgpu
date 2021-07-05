@@ -472,6 +472,9 @@ namespace ILGPU.Runtime
         /// <remarks>
 <#      if (needsTranspose) { #>
         /// CAUTION: this method transposes the data on the CPU.
+<#      } else { #>
+        /// CAUTION: this method may transpose data on the CPU if the extents of this
+        /// view do not match the actual dimensions of the stride.
 <#      } #>
         /// This method is not supported on accelerators.
         /// </remarks>
@@ -486,6 +489,18 @@ namespace ILGPU.Runtime
                 throw new ArgumentNullException(nameof(data));
             if (data.Length < 1)
                 return;
+<#      if (!needsTranspose && dimension > 1) { #>
+            // Check if we need to transpose the output on the CPU
+            if (view.Extent.Y != view.Stride.YStride
+<#          if (dimension > 2) { #>
+                && view.Extent.Z != view.Stride.XStride / view.Stride.YStride
+<#          } #>
+                )
+            {
+                view.AsGeneral().CopyToCPU(stream, data);
+                return;
+            }
+<#      } #>
 <#      for (int i = 0; i < dimension; ++i) { #>
 <#          var propertyName = IndexDimensions[i].PropertyName; #>
             if (data.GetLength(<#= i #>) <
@@ -609,6 +624,9 @@ namespace ILGPU.Runtime
         /// <remarks>
 <#      if (needsTranspose) { #>
         /// CAUTION: this method transposes the data on the CPU.
+<#      } else { #>
+        /// CAUTION: this method may transpose data on the CPU if the extents of this
+        /// view do not match the actual dimensions of the stride.
 <#      } #>
         /// This method is not supported on accelerators.
         /// </remarks>
@@ -623,6 +641,18 @@ namespace ILGPU.Runtime
                 throw new ArgumentNullException(nameof(data));
             if (view.HasNoData())
                 return;
+<#      if (!needsTranspose && dimension > 1) { #>
+            // Check if we need to transpose the output on the CPU
+            if (view.Extent.Y != view.Stride.YStride
+<#          if (dimension > 2) { #>
+                && view.Extent.Z != view.Stride.XStride / view.Stride.YStride
+<#          } #>
+                )
+            {
+                view.AsGeneral().CopyFromCPU(stream, data);
+                return;
+            }
+<#      } #>
 <#      for (int i = 0; i < dimension; ++i) { #>
 <#          var propertyName = IndexDimensions[i].PropertyName; #>
             if (data.GetLength(<#= i #>) <
